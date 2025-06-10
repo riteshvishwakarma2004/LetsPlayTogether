@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 950px;
+      padding: 30px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .left, .right {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #222;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid #ccc; /* Sleek border */
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 15px;
+      width: 100%;
+      color: #333;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #888;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.15);
+      border-color: #666;
+      background-color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .check-section {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .check-section button {
+      padding: 14px 20px;
+      background-color: #444;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .check-section button:hover {
+      background-color: #222;
+    }
+
+    .message-box input {
+      background-color: rgba(240, 240, 240, 0.7);
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      background-color: #222;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 160px;
+      align-self: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Registration</h2>
+
+  <!-- Left Column -->
+  <div class="left">
+    <!-- Check PlayerId Form -->
+    <form th:action="@{/checkId}" method="get" class="check-section">
+      <input type="text" name="playerId" th:value="${id}" placeholder="Enter Player ID to check availability" />
+      <button type="submit">Check</button>
+    </form>
+
+    <!-- Message Display -->
+    <div class="message-box">
+      <input type="text" th:if="${message}" th:value="${message}" readonly />
+    </div>
+
+    <!-- Player ID and Name -->
+    <input type="text" name="playerId" placeholder="Enter the unique Player ID from above" required form="regForm" />
+    <input type="text" name="name" placeholder="Full Name" required form="regForm" />
+    <input type="tel" name="phone" placeholder="Phone Number" required form="regForm" />
+  </div>
+
+  <!-- Right Column -->
+  <div class="right">
+    <!-- Registration Form -->
+    <form th:action="@{/register}" method="post" id="regForm">
+      <input type="text" name="sport" placeholder="Sport (e.g., Football, Cricket)" required />
+      <input type="text" name="area" placeholder="Area/Location" required />
+      <textarea name="description" placeholder="Write about your experience or interests"></textarea>
+      <input type="text" name="pin" placeholder="PIN Code" required />
+      <button type="submit" class="submit-btn">Let's Go</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LetsPlayTogether - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .button-container a {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            margin: 10px;
+            border-radius: 4px;
+        }
+
+        .section-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 45%;
+            min-width: 300px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        form input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #999;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .importance-section {
+            margin: 40px 20px;
+            text-align: center;
+        }
+
+        .importance-section img {
+            width: 300px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+
+        .importance-text {
+            max-width: 800px;
+            margin: auto;
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    LetsPlayTogether
+</header>
+
+<div class="button-container">
+    <a th:href="@{/login}">Login</a>
+    <a th:href="@{/registerPage}">Register</a>
+</div>
+
+<div class="section-container">
+    <!-- Project Description -->
+    <div class="box">
+        <h3>About the Project</h3>
+        <p>
+            LetsPlayTogether is a community platform where sports and game lovers can come together.
+            Players can register themselves and join or create groups based on shared interests.
+            Groups can organize matches, practice sessions, or casual meetups.
+            The platform is designed to help users find others with similar gaming passions in their area.
+            Whether you're into football, cricket, or esports – we help you connect and play together.
+            Join the movement and make your playtime social and exciting!
+        </p>
+    </div>
+
+    <!-- Search Box -->
+    <div class="box">
+        <h3>Find Players or Groups</h3>
+        <form th:action="@{/searchPlayer}" method="get">
+            <input type="text" name="playerId" placeholder="Search player by playerId" />
+            <button type="submit">Search Player</button>
+        </form>
+        <br>
+        <form th:action="@{/searchGroup}" method="get">
+            <input type="text" name="groupId" placeholder="Search group by groupId" />
+            <button type="submit">Search Group</button>
+        </form>
+    </div>
+</div>
+
+<div class="importance-section">
+    <div class="importance-text">
+        <h2>Why Outdoor Sports Matter</h2>
+        <p>
+            Playing outdoor sports is essential for physical health, mental well-being, and social interaction. It helps build discipline, boosts immunity, and improves concentration.
+            Being part of a team fosters unity, leadership, and trust. In today's digital age, real-world team sports help us reconnect with people and nature.
+        </p>
+    </div>
+<!--    <div>-->
+<!--        <img src="https://via.placeholder.com/300x200?text=Team+Play" alt="Team Play">-->
+<!--        <img src="https://via.placeholder.com/300x200?text=Outdoor+Sports" alt="Outdoor Sports">-->
+<!--    </div>-->
+</div>
+
+</body>
+</html>

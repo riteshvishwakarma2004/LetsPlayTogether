@@ -1,9 +1,11 @@
 package com.Ritesh.Project.Controller;
 
+import com.Ritesh.Project.Model.PlayerDetail;
 import com.Ritesh.Project.Services.HomeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,5 +40,23 @@ public class HomeController {
         model.addAttribute("id", id);
         model.addAttribute("message", "This Id is not available, try another");
         return "registerPage";
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestParam("playerId") String playerId,
+                           @RequestParam("name") String name,
+                           @RequestParam("phone") String phone,
+                           @RequestParam("sport") String sport,
+                           @RequestParam("area") String area,
+                           @RequestParam("description") String description,
+                           @RequestParam("pin") String pin,
+                           Model model){
+        PlayerDetail detail = new PlayerDetail(playerId,name,phone,sport,area,"NA",description,pin);
+        boolean registered = homeService.register(detail);
+        if(registered){
+            model.addAttribute("details",detail);
+            return "registered";
+        }
+        return "playerIdTaken";
     }
 }

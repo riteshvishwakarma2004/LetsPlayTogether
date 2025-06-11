@@ -155,26 +155,26 @@
       <input type="text" name="playerId" th:value="${id}" placeholder="Enter Player ID to check availability" />
       <button type="submit">Check</button>
     </form>
+    <br>
 
     <!-- Message Display -->
     <div class="message-box">
       <input type="text" th:if="${message}" th:value="${message}" readonly />
     </div>
 
+    <!-- Registration Form -->
+    <form th:action="@{/register}" method="post" id="regForm">
     <!-- Player ID and Name -->
     <input type="text" name="playerId" placeholder="Enter the unique Player ID from above" required form="regForm" />
     <input type="text" name="name" placeholder="Full Name" required form="regForm" />
     <input type="tel" name="phone" placeholder="Phone Number" required form="regForm" />
   </div>
-
-  <!-- Right Column -->
-  <div class="right">
-    <!-- Registration Form -->
-    <form th:action="@{/register}" method="post" id="regForm">
+      <!-- Right Column -->
+      <div class="right">
       <input type="text" name="sport" placeholder="Sport (e.g., Football, Cricket)" required />
       <input type="text" name="area" placeholder="Area/Location" required />
       <textarea name="description" placeholder="Write about your experience or interests"></textarea>
-      <input type="text" name="pin" placeholder="PIN Code" required />
+      <input type="text" name="pin" placeholder="PIN (password)" required />
       <button type="submit" class="submit-btn">Let's Go</button>
     </form>
   </div>

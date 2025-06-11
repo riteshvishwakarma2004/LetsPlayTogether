@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Registration Successful</title>
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --white: #ffffff;
+      --text: #333333;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --radius: 10px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background-color: var(--white);
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px var(--shadow);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+
+    .info-box {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .info-title {
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 15px;
+    }
+
+    .home-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .home-btn:hover {
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Registered Successfully!</h2>
+
+  <div class="info-box">
+    <div class="info-title">Player ID</div>
+    <div class="info-value" th:text="${details.playerId}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Name</div>
+    <div class="info-value" th:text="${details.name}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Phone</div>
+    <div class="info-value" th:text="${details.phone}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Area</div>
+    <div class="info-value" th:text="${details.area}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Sport</div>
+    <div class="info-value" th:text="${details.sport}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Description</div>
+    <div class="info-value" th:text="${details.description}"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">PIN Code</div>
+    <div class="info-value" th:text="${details.pin}"></div>
+  </div>
+
+  <a th:href="@{/}" class="home-btn">Home</a>
+</div>
+
+</body>
+</html>

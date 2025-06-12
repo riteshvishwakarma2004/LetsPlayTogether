@@ -1,7 +1,12 @@
 package com.Ritesh.Project.Controller;
 
+import com.Ritesh.Project.Model.HomeDetailsDto;
 import com.Ritesh.Project.Model.PlayerDetail;
 import com.Ritesh.Project.Services.HomeService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,12 +56,21 @@ public class HomeController {
                            @RequestParam("description") String description,
                            @RequestParam("pin") String pin,
                            Model model){
-        PlayerDetail detail = new PlayerDetail(playerId,name,phone,sport,area,"NA",description,pin);
+        PlayerDetail detail = new PlayerDetail(playerId,name,phone,sport,area,null,description,pin);
         boolean registered = homeService.register(detail);
         if(registered){
             model.addAttribute("details",detail);
             return "registered";
         }
         return "playerIdTaken";
+    }
+
+    @GetMapping("/playerProfile")
+    public String playerProfile(Model model){
+        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        HomeDetailsDto home = homeService.getAllDetails(playerId);
+        model.addAttribute("home",home);
+        return "playerProfile";
     }
 }

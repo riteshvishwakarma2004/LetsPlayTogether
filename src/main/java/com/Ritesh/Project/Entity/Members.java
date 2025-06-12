@@ -11,11 +11,11 @@ public class Members {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String groupId;
-    private String PlayerId;
+    private String playerId;
 
     public Members(String groupId, String playerId) {
         this.groupId = groupId;
-        PlayerId = playerId;
+        playerId = playerId;
     }
 
     public Members() {
@@ -30,10 +30,10 @@ public class Members {
     }
 
     public String getPlayerId() {
-        return PlayerId;
+        return playerId;
     }
 
     public void setPlayerId(String playerId) {
-        PlayerId = playerId;
+        playerId = playerId;
     }
 }

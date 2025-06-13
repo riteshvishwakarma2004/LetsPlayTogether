@@ -48,7 +48,8 @@ public class MySecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                        .requestMatchers("/home","/","registerPage","/checkId","/trial/home").permitAll()
+                        .requestMatchers("/home","/","registerPage","/checkId","/trial/home",
+                                                    "searchPlayer","searchPlayerFromHome").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
 

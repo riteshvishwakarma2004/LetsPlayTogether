@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Group Registration</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fafafa;
+    }
+
+    input[readonly] {
+        background-color: #eaeaea;
+        color: #666;
+        cursor: not-allowed;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background-color: #444;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #222;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Group Registration</h2>
+  <form th:action="@{/createGroup}" method="post">
+    <div class="form-group">
+      <label for="groupId">Group ID</label>
+      <input type="text" id="groupId" name="groupId" th:value="${id}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="adminId">Admin ID</label>
+      <input type="text" id="adminId" name="adminId" th:value="${id}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="name">Group Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter Group Name">
+    </div>
+    <div class="form-group">
+      <label for="area">Area</label>
+      <input type="text" id="area" name="area" placeholder="Enter Area">
+    </div>
+    <div class="form-group">
+      <label for="sport">Sport</label>
+      <select id="sport" name="sport">
+        <option value="">-- Select Sport --</option>
+        <option value="soccer">Soccer</option>
+        <option value="cricket">Cricket</option>
+        <option value="hockey">Hockey</option>
+        <option value="tennis">Tennis</option>
+        <option value="volleyball">Volleyball</option>
+        <option value="table tennis">Table Tennis</option>
+        <option value="basketball">Basketball</option>
+        <option value="baseball">Baseball</option>
+        <option value="rugby">Rugby</option>
+        <option value="swimming">Swimming</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="moto">Moto</label>
+      <input type="text" id="moto" name="moto" placeholder="Enter Group Moto">
+    </div>
+    <button type="submit" class="submit-btn">Register Group</button>
+  </form>
+</div>
+
+</body>
+</html>

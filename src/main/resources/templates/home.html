@@ -117,15 +117,15 @@
     <!-- Search Box -->
     <div class="box">
         <h3>Find Players or Groups</h3>
-        <form th:action="@{/searchPlayer}" method="get">
+        <form th:action="@{/searchPlayerFromHome}" method="get">
             <input type="text" name="playerId" placeholder="Search player by playerId" />
             <button type="submit">Search Player</button>
         </form>
         <br>
-        <form th:action="@{/searchGroup}" method="get">
-            <input type="text" name="groupId" placeholder="Search group by groupId" />
-            <button type="submit">Search Group</button>
-        </form>
+<!--        <form th:action="@{/searchGroup}" method="get">-->
+<!--            <input type="text" name="groupId" placeholder="Search group by groupId" />-->
+<!--            <button type="submit">Search Group</button>-->
+<!--        </form>-->
     </div>
 </div>
 

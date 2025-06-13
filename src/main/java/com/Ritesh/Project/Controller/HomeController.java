@@ -1,7 +1,9 @@
 package com.Ritesh.Project.Controller;
 
+import com.Ritesh.Project.Entity.PlayersGroups;
 import com.Ritesh.Project.Model.HomeDetailsDto;
 import com.Ritesh.Project.Model.PlayerDetail;
+import com.Ritesh.Project.Model.PlayerDto;
 import com.Ritesh.Project.Services.HomeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +72,54 @@ public class HomeController {
         String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         HomeDetailsDto home = homeService.getAllDetails(playerId);
-        model.addAttribute("home",home);
-        return "playerProfile";
+        model.addAttribute("home", home);
+        if(home.getGroup() == null) {
+            return "playerProfile";
+        }
+
+        return "playerProfile2";
+
+    }
+
+    @GetMapping("/searchPlayerFromHome")
+    public String searchPlayerFromHome(@RequestParam("playerId") String playerId, Model model){
+        PlayerDto player = homeService.searchPlayer(playerId);
+        if(player == null){
+            return "wrongId";
+        }
+        model.addAttribute("player", player);
+        return "playerPageToHome";
+    }
+
+    @GetMapping("/searchPlayer")
+    public String searchPlayer(@RequestParam("playerId") String playerId, Model model){
+        PlayerDto player = homeService.searchPlayer(playerId);
+        if(player == null){
+            return "wrongId";
+        }
+        model.addAttribute("player", player);
+        return "playerPageToProfile";
+    }
+
+    @GetMapping("/groupRegistration")
+    public String groupRegistration(Model model){
+        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("id",playerId);
+        return "groupRegistration";
+    }
+
+    @PostMapping("/createGroup")
+    public void createGroup(@RequestParam("groupId") String groupId,
+                              @RequestParam("adminId") String adminId,
+                              @RequestParam("name") String name,
+                              @RequestParam("sport") String sport,
+                              @RequestParam("moto") String moto,
+                              @RequestParam("area") String area,
+                            Model model
+                              )
+    {
+        PlayersGroups group = new PlayersGroups(groupId,name,adminId,area,sport,moto,null);
+        homeService.createGroup(group);
+        playerProfile(model);
     }
 }

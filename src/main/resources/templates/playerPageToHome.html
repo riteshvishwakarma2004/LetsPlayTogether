@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Player Page</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    .player-box {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        min-width: 300px;
+        text-align: left;
+    }
+
+    .player-box h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .info-item strong {
+        color: #444;
+        margin-right: 8px;
+    }
+
+    .back-btn {
+        margin-top: 25px;
+        padding: 12px 24px;
+        font-size: 15px;
+        background-color: #444;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+        background-color: #222;
+    }
+  </style>
+</head>
+<body>
+
+<div class="player-box">
+  <h2>Player Information</h2>
+  <div class="info-item"><strong>ID:</strong> <span th:text="${player.playerId}">ritesh52</span></div>
+  <div class="info-item"><strong>Name:</strong> <span th:text="${player.name}">Ritesh Vishwakarma</span></div>
+  <div class="info-item"><strong>Phone:</strong> <span th:text="${player.phone}">8850620051</span></div>
+  <div class="info-item"><strong>Sport:</strong> <span th:text="${player.sport}">Cricket</span></div>
+  <div class="info-item"><strong>Area:</strong> <span th:text="${player.area}">Airoli</span></div>
+  <div class="info-item"><strong>Description:</strong> <span th:text="${player.description}">Fast bowling allrounder</span></div>
+
+  <form th:action="@{/}" method="get">
+    <button class="back-btn">Back to Profile</button>
+  </form>
+</div>
+
+</body>
+</html>

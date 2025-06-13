@@ -89,4 +89,16 @@ public class HomeService {
         return home;
 
     }
+
+    public PlayerDto searchPlayer(String playerId) {
+        PlayerDto player = playersRepo.searchPlayer(playerId);
+        return player;
+    }
+
+    public void createGroup(PlayersGroups group) {
+        groupRepo.save(group);
+        Players player = playersRepo.findByplayerId(group.getAdminId());
+        player.setGroupId(group.getGroupId());
+        playersRepo.save(player);
+    }
 }

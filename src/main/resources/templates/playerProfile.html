@@ -115,7 +115,7 @@
 <body>
 
 <div class="container">
-
+    <a th:href="@{/logout}">Logout</a>
     <!-- Row 1: Search Player & Search Group -->
     <div class="row">
         <div class="segment">
@@ -137,7 +137,7 @@
 
     <!-- Row 2: Create Group Center Button -->
     <div class="row center-btn">
-        <form th:action="@{/createGroup}" method="get">
+        <form th:action="@{/groupRegistration}" method="get">
             <button class="create-btn">Create Your Group</button>
         </form>
     </div>

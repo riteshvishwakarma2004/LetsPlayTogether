@@ -101,4 +101,24 @@ public class HomeService {
         player.setGroupId(group.getGroupId());
         playersRepo.save(player);
     }
+
+    public GroupPageDetails getGroupDetails(String groupId) {
+        Optional<PlayersGroups> temp = groupRepo.findById(groupId);
+
+        PlayersGroups detail = temp.get();
+        System.out.println(detail);
+        GroupDetails gd = new GroupDetails(detail.getGroupId(),detail.getName(),
+                                                 detail.getSport(),detail.getArea(),
+                                                detail.getMoto(),detail.getNotice(),
+                                                    detail.getAdminId());
+        GroupPageDetails details = new GroupPageDetails();
+        details.setGroupDetails(gd);
+        System.out.println("1");
+        List<String> playerIds = membersRepo.getAllPlayersId(groupId);
+        List<GroupMembers> membersList = playersRepo.getMembersDetails(playerIds);
+        details.setMembers((ArrayList<GroupMembers>) membersList);
+        System.out.println("2");
+
+        return details;
+     }
 }

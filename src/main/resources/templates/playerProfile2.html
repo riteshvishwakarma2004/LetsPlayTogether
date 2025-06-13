@@ -129,7 +129,7 @@
     <div class="segment">
       <h3>Search Group</h3>
       <form th:action="@{/searchGroup}" method="get">
-        <input type="text" name="groupId" placeholder="Search Group by groupId">
+        <input type="text" name="groupId" placeholder="Search Group">
         <button type="submit">Search</button>
       </form>
     </div>
@@ -146,7 +146,7 @@
       <div th:if="${home.groups != null and !home.groups.isEmpty()}" th:each="g : ${home.groups}">
         <div class="group-item">
           <strong th:text="${g.name}">Group Name</strong>
-          <form th:action="@{/enterGroup}" method="post">
+          <form th:action="@{/enterGroup}" method="get">
             <input type="hidden" name="groupId" th:value="${g.groupId}" />
             <button type="submit">Enter</button>
           </form>
@@ -163,7 +163,7 @@
       <div th:if="${home.group != null}">
         <div class="group-item">
           <strong th:text="${home.group.name}">Your Group Name</strong>
-          <form th:action="@{/enterGroup}" method="post">
+          <form th:action="@{/enterGroup}" method="get">
             <input type="hidden" name="groupId" th:value="${home.group.groupId}" />
             <button type="submit">Enter</button>
           </form>

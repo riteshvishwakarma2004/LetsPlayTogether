@@ -1,6 +1,7 @@
 package com.Ritesh.Project.Controller;
 
 import com.Ritesh.Project.Entity.PlayersGroups;
+import com.Ritesh.Project.Model.GroupPageDetails;
 import com.Ritesh.Project.Model.HomeDetailsDto;
 import com.Ritesh.Project.Model.PlayerDetail;
 import com.Ritesh.Project.Model.PlayerDto;
@@ -109,17 +110,36 @@ public class HomeController {
     }
 
     @PostMapping("/createGroup")
-    public void createGroup(@RequestParam("groupId") String groupId,
+    public String createGroup(@RequestParam("groupId") String groupId,
                               @RequestParam("adminId") String adminId,
                               @RequestParam("name") String name,
                               @RequestParam("sport") String sport,
                               @RequestParam("moto") String moto,
                               @RequestParam("area") String area,
-                            Model model
+                               Model model
                               )
     {
+        System.out.println("entered here");
         PlayersGroups group = new PlayersGroups(groupId,name,adminId,area,sport,moto,null);
         homeService.createGroup(group);
-        playerProfile(model);
+        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        HomeDetailsDto home = homeService.getAllDetails(playerId);
+        model.addAttribute("home", home);
+        System.out.println("reached just here");
+        return "playerProfile2";
+    }
+
+    @GetMapping("/enterGroup")
+    @ResponseBody
+    public GroupPageDetails enterGroup(@RequestParam("groupId") String groupId, Model model){
+        String currPlayer = SecurityContextHolder.getContext().getAuthentication().getName();
+        GroupPageDetails details = homeService.getGroupDetails(groupId);
+       // model.addAttribute("details",details);
+//        if(details.getGroupDetails().getGroupId().equals(currPlayer)){
+//            return "AdminGroupPage";
+//        }
+//        return "groupPage";
+        return details;
     }
 }

@@ -1,10 +1,7 @@
 package com.Ritesh.Project.Controller;
 
 import com.Ritesh.Project.Entity.PlayersGroups;
-import com.Ritesh.Project.Model.GroupPageDetails;
-import com.Ritesh.Project.Model.HomeDetailsDto;
-import com.Ritesh.Project.Model.PlayerDetail;
-import com.Ritesh.Project.Model.PlayerDto;
+import com.Ritesh.Project.Model.*;
 import com.Ritesh.Project.Services.HomeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -131,15 +132,47 @@ public class HomeController {
     }
 
     @GetMapping("/enterGroup")
-    @ResponseBody
-    public GroupPageDetails enterGroup(@RequestParam("groupId") String groupId, Model model){
+    public String enterGroup(@RequestParam("groupId") String groupId, Model model){
         String currPlayer = SecurityContextHolder.getContext().getAuthentication().getName();
         GroupPageDetails details = homeService.getGroupDetails(groupId);
-       // model.addAttribute("details",details);
-//        if(details.getGroupDetails().getGroupId().equals(currPlayer)){
-//            return "AdminGroupPage";
-//        }
-//        return "groupPage";
-        return details;
+        model.addAttribute("details",details);
+        if(details.getGroupDetails().getGroupId().equals(currPlayer)){
+            return "adminGroupPage";
+        }
+        return "groupPage";
+    }
+
+    @PostMapping("updateNotice")
+    public String updateNotice(@RequestParam("groupId") String groupId,
+                               @RequestParam("notice") String notice,
+                               Model model){
+        GroupPageDetails details = homeService.updateNotice(groupId, notice);
+        model.addAttribute("details",details);
+        return "adminGroupPage";
+    }
+
+
+    @GetMapping("searchGroup")
+    public String searchGroup(@RequestParam("sport") String sport, Model model){
+        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<GroupDetails> groups =  homeService.getAllGroupsBySport(playerId, sport.toLowerCase());
+        model.addAttribute("groups",groups);
+        return "groupsList";
+    }
+
+    @PostMapping("/requestGroup")
+    @ResponseBody
+    public String requestGroup(@RequestParam("groupId") String groupId){
+        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        homeService.requestGroup(groupId,playerId);
+        return "Request is sent";
+    }
+
+    @PostMapping("/acceptRequest")
+    public String acceptRequest(@RequestParam("playerId")String playerId, Model model){
+        String myGroupId = SecurityContextHolder.getContext().getAuthentication().getName();
+         HomeDetailsDto home = homeService.acceptRequest(myGroupId,playerId,myGroupId);
+        model.addAttribute("home", home);
+        return "playerProfile2";
     }
 }

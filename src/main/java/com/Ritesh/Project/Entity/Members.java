@@ -15,7 +15,7 @@ public class Members {
 
     public Members(String groupId, String playerId) {
         this.groupId = groupId;
-        playerId = playerId;
+        this.playerId = playerId;
     }
 
     public Members() {
@@ -34,6 +34,6 @@ public class Members {
     }
 
     public void setPlayerId(String playerId) {
-        playerId = playerId;
+        this.playerId = playerId;
     }
 }

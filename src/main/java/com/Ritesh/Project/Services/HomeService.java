@@ -1,9 +1,12 @@
 package com.Ritesh.Project.Services;
 
+import com.Ritesh.Project.Entity.JoiningRequest;
+import com.Ritesh.Project.Entity.Members;
 import com.Ritesh.Project.Entity.Players;
 import com.Ritesh.Project.Entity.PlayersGroups;
 import com.Ritesh.Project.Model.*;
 import com.Ritesh.Project.Repositories.GroupsRepo;
+import com.Ritesh.Project.Repositories.JoiningRequestRepo;
 import com.Ritesh.Project.Repositories.MembersRepo;
 import com.Ritesh.Project.Repositories.PlayersRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,11 +23,14 @@ public class HomeService {
     private PasswordEncoder encoder;
     private GroupsRepo groupRepo;
     private MembersRepo membersRepo;
-    public HomeService(PlayersRepo repo, PasswordEncoder encoder, GroupsRepo groupRepo, MembersRepo membersRepo){
+    private JoiningRequestRepo requestRepo;
+
+    public HomeService(PlayersRepo repo, PasswordEncoder encoder, GroupsRepo groupRepo, MembersRepo membersRepo, JoiningRequestRepo requestRepo){
         this.playersRepo = repo;
         this.encoder = encoder;
         this.groupRepo = groupRepo;
         this.membersRepo = membersRepo;
+        this.requestRepo = requestRepo;
     }
 
     public boolean checkForPlayerId(String id){
@@ -66,7 +72,7 @@ public class HomeService {
         Players player = playersRepo.findByplayerId(playerId);
         PlayerDto dto = new PlayerDto(player.getPlayerId(),player.getName(),player.getPhone(),player.getSport(),player.getArea(),player.getDescription());
         home.setPlayer(dto);
-        System.out.println("player detail addded");
+
 
         String myGroupId = player.getGroupId();
         if(myGroupId != null){
@@ -86,6 +92,8 @@ public class HomeService {
         }
         home.setGroups(groups);
 
+        List<String> requests = requestRepo.getAllRequests(playerId);
+        home.setRequests(requests);
         return home;
 
     }
@@ -106,19 +114,83 @@ public class HomeService {
         Optional<PlayersGroups> temp = groupRepo.findById(groupId);
 
         PlayersGroups detail = temp.get();
-        System.out.println(detail);
         GroupDetails gd = new GroupDetails(detail.getGroupId(),detail.getName(),
                                                  detail.getSport(),detail.getArea(),
                                                 detail.getMoto(),detail.getNotice(),
                                                     detail.getAdminId());
         GroupPageDetails details = new GroupPageDetails();
         details.setGroupDetails(gd);
-        System.out.println("1");
         List<String> playerIds = membersRepo.getAllPlayersId(groupId);
         List<GroupMembers> membersList = playersRepo.getMembersDetails(playerIds);
         details.setMembers((ArrayList<GroupMembers>) membersList);
-        System.out.println("2");
 
         return details;
      }
+
+    public GroupPageDetails updateNotice(String groupId, String notice) {
+       Optional<PlayersGroups> ogroup =  groupRepo.findById(groupId);
+       PlayersGroups detail = ogroup.get();
+       detail.setNotice(notice);
+       groupRepo.save(detail);
+
+        GroupDetails gd = new GroupDetails(detail.getGroupId(),detail.getName(),
+                detail.getSport(),detail.getArea(),
+                detail.getMoto(),detail.getNotice(),
+                detail.getAdminId());
+        GroupPageDetails details = new GroupPageDetails();
+        details.setGroupDetails(gd);
+        List<String> playerIds = membersRepo.getAllPlayersId(groupId);
+        List<GroupMembers> membersList = playersRepo.getMembersDetails(playerIds);
+        details.setMembers((ArrayList<GroupMembers>) membersList);
+
+        return details;
+
+
+    }
+
+    public List<GroupDetails> getAllGroupsBySport(String playerId, String sport) {
+        List<String> playerIsInThem = membersRepo.findAllGroupIds(playerId);
+        playerIsInThem.add(playerId);
+        List<GroupDetails> groups = groupRepo.findAllRemainingGroups(playerIsInThem,sport);
+        return groups;
+    }
+
+    public void requestGroup(String groupId, String playerId) {
+        requestRepo.save(new JoiningRequest(playerId,groupId));
+    }
+
+    public HomeDetailsDto acceptRequest(String myGroupId,String requestingPlayerId, String playerId) {
+        Members member = new Members(myGroupId,requestingPlayerId);
+        membersRepo.save(member);
+        requestRepo.removeRequest(myGroupId,requestingPlayerId);
+
+        HomeDetailsDto home = new HomeDetailsDto();
+
+        Players player = playersRepo.findByplayerId(playerId);
+        PlayerDto dto = new PlayerDto(player.getPlayerId(),player.getName(),player.getPhone(),player.getSport(),player.getArea(),player.getDescription());
+        home.setPlayer(dto);
+
+
+        String MyGroupId = player.getGroupId();
+        if(MyGroupId != null){
+            String name = groupRepo.getName(MyGroupId);
+            YourGroup group = new YourGroup(MyGroupId,name);
+            home.setGroup(group);
+        }
+
+        List<String> groupIds = membersRepo.findAllGroupIds(playerId);
+        if(groupIds == null){
+            return home;
+        }
+        List<PlayersGroups> allGroups = groupRepo.findAllById(groupIds);
+        ArrayList<YouAreInThem> groups = new ArrayList<>();
+        for(PlayersGroups group : allGroups){
+            groups.add(new YouAreInThem(group.getGroupId(),group.getName()));
+        }
+        home.setGroups(groups);
+
+        List<String> requests = requestRepo.getAllRequests(playerId);
+        home.setRequests(requests);
+        return home;
+    }
 }

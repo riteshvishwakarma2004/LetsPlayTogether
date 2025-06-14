@@ -1,11 +1,13 @@
 package com.Ritesh.Project.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeDetailsDto {
     private PlayerDto player;
     private ArrayList<YouAreInThem> groups;
     private YourGroup group;
+    private List<String> requests;
 
     public HomeDetailsDto(PlayerDto player, ArrayList<YouAreInThem> groups, YourGroup group) {
         this.player = player;
@@ -38,5 +40,13 @@ public class HomeDetailsDto {
 
     public void setGroup(YourGroup group) {
         this.group = group;
+    }
+
+    public List<String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<String> requests) {
+        this.requests = requests;
     }
 }

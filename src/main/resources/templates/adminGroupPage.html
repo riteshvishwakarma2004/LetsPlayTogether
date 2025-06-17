@@ -101,16 +101,18 @@
       <button type="submit" class="update-btn">Update</button>
     </form>
   </div>
-
-  <div class="members-grid">
-    <div th:if="${details.members != null and !details.members.isEmpty()}">
+  <p>Members: </p>
+  <div class="members-grid" th:if="${details.members != null and !details.members.isEmpty()}">
     <div class="member-card" th:each="m : ${details.members}">
       <p><strong>ID:</strong> <span th:text="${m.playerId}">xyz</span></p>
       <p><strong>Name:</strong> <span th:text="${m.name}">abc</span></p>
     </div>
   </div>
 
-</div>
+  <div th:if="${details.members == null or details.members.isEmpty()}">
+    <p>No members found.</p>
+  </div>
+
 
 </body>
 </html>

@@ -59,12 +59,14 @@
         font-weight: bold;
     }
 
-    .members-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-        margin-top: 40px;
-    }
+   .members-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
+    gap: 20px;
+    margin-top: 40px;
+    max-width: 1000px;
+    margin: auto;
+}
 
     .member-card {
         background-color: #fafafa;
@@ -97,16 +99,18 @@
       <label for="notice"><strong>Notice:</strong></label>
       <textarea id="notice" name="notice" th:text="${details.groupDetails.notice}" readonly>No notice from admin yet</textarea>
   </div>
-
-  <div class="members-grid">
-    <div th:if="${details.members != null and !details.members.isEmpty()}">
-      <div class="member-card" th:each="m : ${details.members}">
-        <p><strong>ID:</strong> <span th:text="${m.playerId}">xyz</span></p>
-        <p><strong>Name:</strong> <span th:text="${m.name}">abc</span></p>
-      </div>
+  <p>Members: </p>
+  <div class="members-grid" th:if="${details.members != null and !details.members.isEmpty()}">
+    <div class="member-card" th:each="m : ${details.members}">
+      <p><strong>ID:</strong> <span th:text="${m.playerId}">xyz</span></p>
+      <p><strong>Name:</strong> <span th:text="${m.name}">abc</span></p>
     </div>
-
   </div>
+
+  <div th:if="${details.members == null or details.members.isEmpty()}">
+    <p>No members found.</p>
+  </div>
+
 
 </body>
 </html>

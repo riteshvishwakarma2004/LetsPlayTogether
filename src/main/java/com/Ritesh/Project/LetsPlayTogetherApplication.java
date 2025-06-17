@@ -12,11 +12,6 @@ public class LetsPlayTogetherApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(LetsPlayTogetherApplication.class, args);
-		System.out.println("Hello");
-		LocalDateTime dateTime = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String date = dateTime.format(formatter);
-		System.out.println(date);
 	}
 
 }

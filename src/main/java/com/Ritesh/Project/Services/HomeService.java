@@ -159,38 +159,10 @@ public class HomeService {
         requestRepo.save(new JoiningRequest(playerId,groupId));
     }
 
-    public HomeDetailsDto acceptRequest(String myGroupId,String requestingPlayerId, String playerId) {
+    public void acceptRequest(String myGroupId,String requestingPlayerId, String playerId) {
         Members member = new Members(myGroupId,requestingPlayerId);
         membersRepo.save(member);
         requestRepo.removeRequest(myGroupId,requestingPlayerId);
 
-        HomeDetailsDto home = new HomeDetailsDto();
-
-        Players player = playersRepo.findByplayerId(playerId);
-        PlayerDto dto = new PlayerDto(player.getPlayerId(),player.getName(),player.getPhone(),player.getSport(),player.getArea(),player.getDescription());
-        home.setPlayer(dto);
-
-
-        String MyGroupId = player.getGroupId();
-        if(MyGroupId != null){
-            String name = groupRepo.getName(MyGroupId);
-            YourGroup group = new YourGroup(MyGroupId,name);
-            home.setGroup(group);
-        }
-
-        List<String> groupIds = membersRepo.findAllGroupIds(playerId);
-        if(groupIds == null){
-            return home;
-        }
-        List<PlayersGroups> allGroups = groupRepo.findAllById(groupIds);
-        ArrayList<YouAreInThem> groups = new ArrayList<>();
-        for(PlayersGroups group : allGroups){
-            groups.add(new YouAreInThem(group.getGroupId(),group.getName()));
-        }
-        home.setGroups(groups);
-
-        List<String> requests = requestRepo.getAllRequests(playerId);
-        home.setRequests(requests);
-        return home;
     }
 }

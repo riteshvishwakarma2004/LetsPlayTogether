@@ -120,15 +120,11 @@ public class HomeController {
                                Model model
                               )
     {
-        System.out.println("entered here");
+
         PlayersGroups group = new PlayersGroups(groupId,name,adminId,area,sport,moto,null);
         homeService.createGroup(group);
-        String playerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return "redirect:/playerProfile";
 
-        HomeDetailsDto home = homeService.getAllDetails(playerId);
-        model.addAttribute("home", home);
-        System.out.println("reached just here");
-        return "playerProfile2";
     }
 
     @GetMapping("/enterGroup")
@@ -171,8 +167,8 @@ public class HomeController {
     @PostMapping("/acceptRequest")
     public String acceptRequest(@RequestParam("playerId")String playerId, Model model){
         String myGroupId = SecurityContextHolder.getContext().getAuthentication().getName();
-         HomeDetailsDto home = homeService.acceptRequest(myGroupId,playerId,myGroupId);
-        model.addAttribute("home", home);
-        return "playerProfile2";
+        homeService.acceptRequest(myGroupId,playerId,myGroupId);
+
+        return "redirect:/playerProfile";
     }
 }

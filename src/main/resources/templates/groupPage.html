@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Group Details</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #444;
+    }
+
+    .info {
+        margin-bottom: 20px;
+    }
+
+    .info p {
+        margin: 8px 0;
+        font-size: 16px;
+    }
+
+    .notice-section {
+        margin-top: 30px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        resize: vertical;
+    }
+
+    .update-btn {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .members-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    .member-card {
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .member-card p {
+        margin: 5px 0;
+        font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 th:text="'Group: ' + ${details.groupDetails.name}">Group: Dream</h2>
+
+  <div class="info">
+    <p><strong>Group ID:</strong> <span th:text="${details.groupDetails.groupId}">ritesh</span></p>
+    <p><strong>Sport:</strong> <span th:text="${details.groupDetails.sport}">Cricket</span></p>
+    <p><strong>Area:</strong> <span th:text="${details.groupDetails.area}">Airoli</span></p>
+    <p><strong>Moto:</strong> <span th:text="${details.groupDetails.moto}">Let's play to win</span></p>
+  </div>
+
+  <div class="notice-section">
+      <label for="notice"><strong>Notice:</strong></label>
+      <textarea id="notice" name="notice" th:text="${details.groupDetails.notice}" readonly>No notice from admin yet</textarea>
+  </div>
+
+  <div class="members-grid">
+    <div th:if="${details.members != null and !details.members.isEmpty()}">
+      <div class="member-card" th:each="m : ${details.members}">
+        <p><strong>ID:</strong> <span th:text="${m.playerId}">xyz</span></p>
+        <p><strong>Name:</strong> <span th:text="${m.name}">abc</span></p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
